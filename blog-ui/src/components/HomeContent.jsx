@@ -6,16 +6,15 @@ import QuickReadsAccordion from "./QuickReadsAccordion";
 import TrendingPosts from "./TrendingPosts";
 import LatestComments from "./LatestComments";
 import { useEffect } from "react";
-import { applySEO } from "../utils/seo";
 import SidebarAd from "./SidebarAd";
 import FeaturedInlineAd from "./FeaturedInlineAd";
 
 const HomeContent = () => {
   useEffect(() => {
-    applySEO({
-      title: "Trending & Insightful Posts",
-      description: "Explore trending and insightful posts on Postify.",
-      url: "https://postify.com/",
+    setMeta({
+      title: SEO.home.title,
+      description: SEO.home.description,
+      url: SEO.siteUrl,
     });
   }, []);
   return (
