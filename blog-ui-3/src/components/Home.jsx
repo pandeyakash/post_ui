@@ -9,6 +9,8 @@ import TrendingPostsRight from "./TrendingPostsRight";
 import TrendingTopics from "./TrendingTopics";
 import { applySEO } from "../utils/seo";
 import { SITE_SEO } from "../config/seo.config";
+import InlineContentAd from "./InlineContentAd";
+import SidebarAd from "./SidebarAd";
 
 const Home = () => {
   useEffect(() => {
@@ -40,12 +42,14 @@ const Home = () => {
           <div>
             <EditorsNote />
             <LatestPosts />
+             <InlineContentAd />
           </div>
 
           {/* RIGHT */}
           <div className="space-y-16">
             <TrendingPostsRight />
             <PopularAllTimeSlider />
+            <SidebarAd />
             <MiniAnalyticsCard />
           </div>
       </div>

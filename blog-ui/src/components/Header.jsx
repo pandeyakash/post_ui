@@ -1,21 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const TOPICS = [
-  "React",
-  "JavaScript",
-  "UI/UX",
-  "Tailwind",
-  "Redux",
-  "Performance",
-  "Web Animations",
-  "Accessibility",
-  "Design Systems",
-  "Testing",
-];
+import api from "../services/api";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [topics, setTopics] = useState([]);
+
+  const getData = async() =>{
+    try {
+      const response = await api.get(`/categories`);
+      if(response.status === 200) {
+        const topics = [...response.data]
+        setTopics(topics)
+      }
+      console.log("Response", response)
+    } catch (error) {
+      console.error("Error fetching categories", error)
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, [])
 
   return (
     <header className="sticky top-0 z-50">
@@ -103,9 +109,9 @@ const Header = () => {
         <div className="relative max-w-7xl mx-auto px-4">
           <div className="hidden md:flex items-center h-14 overflow-x-auto no-scrollbar gap-1">
 
-            {TOPICS.map((topic, index) => (
+            {topics.map((topic, index) => (
               <div
-                key={topic}
+                key={topic.id}
                 style={{ animationDelay: `${index * 40}ms` }}
                 className="group relative px-5 h-9 flex items-center
                   text-sm font-semibold text-white/90
@@ -120,7 +126,7 @@ const Header = () => {
 
                 {/* Text */}
                 <span className="relative z-10 group-hover:translate-x-1 transition-transform">
-                  {topic}
+                  {topic.name}
                 </span>
               </div>
             ))}
@@ -142,12 +148,12 @@ const Header = () => {
             <span>Topics</span>
 
             <div className="pt-4 flex flex-wrap gap-2">
-              {TOPICS.map((topic) => (
+              {topics.map((topic) => (
                 <span
                   key={topic}
                   className="px-3 py-1 text-xs rounded-full bg-white/90 text-gray-900"
                 >
-                  {topic}
+                  {topic.name}
                 </span>
               ))}
             </div>
